@@ -12,6 +12,8 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include <sstream>
+
 class Book
 {
 	public:
@@ -95,17 +97,17 @@ void display_info(Book contact)
 {
 	if (contact.flag == 1)
 	{
-		std::cout << contact.fname << std::endl;
-		std::cout << contact.lname << std::endl;
-		std::cout << contact.nname << std::endl;
-		std::cout << contact.login << std::endl;
-		std::cout << contact.padrs << std::endl;
-		std::cout << contact.eadrs << std::endl;
-		std::cout << contact.phnbr << std::endl;
-		std::cout << contact.dborn << std::endl;
-		std::cout << contact.ffood << std::endl;
-		std::cout << contact.ucolr << std::endl;
-		std::cout << contact.dscrt << std::endl;
+		std::cout << std::setw(13) << "First Name: "	<< contact.fname << std::endl;
+		std::cout << std::setw(13) << "Last Name: "		<< contact.lname << std::endl;
+		std::cout << std::setw(13) << "Nick Name: "		<< contact.nname << std::endl;
+		std::cout << std::setw(13) << "Login: "			<< contact.login << std::endl;
+		std::cout << std::setw(13) << "Curr. Adr: "		<< contact.padrs << std::endl;
+		std::cout << std::setw(13) << "Email: "			<< contact.eadrs << std::endl;
+		std::cout << std::setw(13) << "Phone Nbr: "		<< contact.phnbr << std::endl;
+		std::cout << std::setw(13) << "Birthday: "		<< contact.dborn << std::endl;
+		std::cout << std::setw(13) << "Fav. Food: "		<< contact.ffood << std::endl;
+		std::cout << std::setw(13) << "Und. Color: "	<< contact.ucolr << std::endl;
+		std::cout << std::setw(13) << "Drk. Secret: "	<< contact.dscrt << std::endl;
 	}
 	else
 		std::cout << "No contact at this index :(" << std::endl;
@@ -114,8 +116,10 @@ void display_info(Book contact)
 void p_search(Book *contacts)
 {
 	int i;
+	std::string index;
 	std::cout << "Which contact would you like to see?: ";
-	std::getline(std::cin, i);
+	std::getline (std::cin,  index);
+	std::stringstream(index) >> i;
 	display_info(contacts[i]);
 }
 
@@ -130,15 +134,21 @@ int main(void)
 	j = -1;
 	while(1 + 1 == 2)
 	{
-		std::cout << "Whatchu wanna do? (SEARCH, ADD OR EXIT)" << std::endl;
+		std::cout << "Whatchu wanna do? (SEARCH, ADD OR EXIT):  ";
 		std::getline (std::cin, cmd);
 		if(cmd.compare("SEARCH") == 0)
 		{
-			std::cout <<"Searching" << std::endl;
-			while(contacts[++j].flag == 1)
-				print_contact(contacts[j], j);
-			j = -1;
-			p_search(contacts);
+			if (i > 0)
+			{
+				std::cout << "\n   Index   " << " First N. " << "   Last N. " << "  Nick N. " << std::endl;
+				while(contacts[++j].flag == 1)
+					print_contact(contacts[j], j);
+				j = -1;
+				std::cout << std::endl;
+				p_search(contacts);
+			}
+			else
+				std::cout << "No contacts in phonebook! (Try ADD first)" << std::endl;
 		}
 		else if(cmd.compare("ADD") == 0)
 		{
@@ -151,7 +161,7 @@ int main(void)
 			else
 			{
 				std::cout << "Contacts full!" << std::endl;
-				system("say 'CONTACTS ARE FULL!'");
+				//system("say 'CONTACTS ARE FULL!'");
 			}
 		}
 		else if(cmd.compare("EXIT") == 0)
@@ -159,7 +169,7 @@ int main(void)
 		else
 		{
 			std::cout << "Im sorry Dave, I cant let you do that..."<< std::endl;
-			system("say 'try again butter fingers'"); 
+			//system("say 'try again butter fingers'"); 
 		}
 	}
 }

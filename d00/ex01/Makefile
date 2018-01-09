@@ -5,22 +5,10 @@
 #                                                     +:+ +:+         +:+      #
 #    By: eramirez <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2018/01/08 14:15:27 by eramirez          #+#    #+#              #
-#    Updated: 2018/01/08 14:25:10 by eramirez         ###   ########.fr        #
+#    Created: 2018/01/08 13:26:26 by eramirez          #+#    #+#              #
+#    Updated: 2018/01/08 15:22:26 by eramirez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 all:
-	clang++ -Wall -Werror -Wextra -o megaphone megaphone.cpp
-
-clean:
-	rm megaphone
-
-test1:
-	./megaphone "this should be uppercase"
-
-test2:
-	./megaphone
-
-test3:
-	./megaphone "one string " "two string " "red string " "blue string"
+	clang++	-Wall -Werror -Wextra -o pb myapb.cpp

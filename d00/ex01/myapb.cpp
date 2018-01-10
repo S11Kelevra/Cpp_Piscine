@@ -6,57 +6,50 @@
 /*   By: eramirez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 14:25:06 by eramirez          #+#    #+#             */
-/*   Updated: 2018/01/08 18:13:20 by eramirez         ###   ########.fr       */
+/*   Updated: 2018/01/09 21:44:49 by eramirez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <iostream>
-#include <iomanip>
+
+#include "relevant.hpp"
 #include <string>
-#include <sstream>
-
-class Book
-{
-	public:
-		std::string fname, lname, nname, login, padrs, eadrs, phnbr, dborn, ffood, ucolr, dscrt;
-		int flag;
-};
-
 
 void ft_addc(Book *contacts, int i)
 {
+	Book contact;
 	std::cout << "First name?" << std::endl;
-	std::getline (std::cin, contacts[i].fname);
+	std::getline (std::cin, contact.fname);
 
 	std::cout << "Last name" << std::endl;
-	std::getline (std::cin, contacts[i].lname);
+	std::getline (std::cin, contact.lname);
 
 	std::cout << "Nickname?" << std::endl;
-	std::getline (std::cin, contacts[i].nname);
+	std::getline (std::cin, contact.nname);
 
 	std::cout << "Login?" << std::endl;
-	std::getline (std::cin, contacts[i].login);
+	std::getline (std::cin, contact.login);
 
 	std::cout << "Current adress?" << std::endl;
-	std::getline (std::cin, contacts[i].padrs);
+	std::getline (std::cin, contact.padrs);
 
 	std::cout << "Email adress?" << std::endl;
-	std::getline (std::cin, contacts[i].eadrs);
+	std::getline (std::cin, contact.eadrs);
 
 	std::cout << "Phone number?" << std::endl;
-	std::getline (std::cin, contacts[i].phnbr);
+	std::getline (std::cin, contact.phnbr);
 
 	std::cout << "Birthday?" << std::endl;
-	std::getline (std::cin, contacts[i].dborn);
+	std::getline (std::cin, contact.dborn);
 
 	std::cout << "Favorite meal?" << std::endl;
-	std::getline (std::cin, contacts[i].ffood);
+	std::getline (std::cin, contact.ffood);
 
 	std::cout << "Underwear color?" << std::endl;
-	std::getline (std::cin, contacts[i].ucolr);
+	std::getline (std::cin, contact.ucolr);
 
 	std::cout << "Darkest secret?" << std::endl;
-	std::getline (std::cin, contacts[i].dscrt);
-	contacts[i].flag = 1;
+	std::getline (std::cin, contact.dscrt);
+	contact.flag = 1;
+	contacts[i] = contact;
 }
 
 void print_contact(Book contacts, int j)
@@ -109,18 +102,32 @@ void display_info(Book contact)
 		std::cout << std::setw(13) << "Und. Color: "	<< contact.ucolr << std::endl;
 		std::cout << std::setw(13) << "Drk. Secret: "	<< contact.dscrt << std::endl;
 	}
-	else
-		std::cout << "No contact at this index :(" << std::endl;
 }
 
-void p_search(Book *contacts)
+void p_search(Book *contacts, int j)
 {
 	int i;
+	int x;
+	x = -1;
 	std::string index;
 	std::cout << "Which contact would you like to see?: ";
 	std::getline (std::cin,  index);
-	std::stringstream(index) >> i;
-	display_info(contacts[i]);
+	while(index[++x])
+	{
+		if (isdigit(index[x]) > 0)
+			std::stringstream(index) >> i;
+		else
+		{
+		std::cout << "Invalid number!" << std::endl;
+		return;
+		}
+	}
+	if (i >= 0 && i <= j && i < 8)
+		display_info(contacts[i]);
+	else if (i > j && i < 8)
+		std::cout << "No contact at this index yet!" << std::endl;
+	else
+		std::cout << "Index out of range!" << std::endl;
 }
 
 int main(void)
@@ -130,7 +137,7 @@ int main(void)
 	int i;
 	int j;
 
-	i = 0;
+	i = -1;
 	j = -1;
 	while(1 + 1 == 2)
 	{
@@ -138,14 +145,14 @@ int main(void)
 		std::getline (std::cin, cmd);
 		if(cmd.compare("SEARCH") == 0)
 		{
-			if (i > 0)
+			if (i > -1)
 			{
 				std::cout << "\n   Index   " << " First N. " << "   Last N. " << "  Nick N. " << std::endl;
 				while(contacts[++j].flag == 1)
 					print_contact(contacts[j], j);
 				j = -1;
 				std::cout << std::endl;
-				p_search(contacts);
+				p_search(contacts, i);
 			}
 			else
 				std::cout << "No contacts in phonebook! (Try ADD first)" << std::endl;
@@ -153,23 +160,14 @@ int main(void)
 		else if(cmd.compare("ADD") == 0)
 		{
 			std::cout << "Adding" << std::endl;
-			if (i < 8)
-			{
+			if (++i < 8)
 				ft_addc(contacts, i);
-				i++;
-			}
 			else
-			{
 				std::cout << "Contacts full!" << std::endl;
-				//system("say 'CONTACTS ARE FULL!'");
-			}
 		}
 		else if(cmd.compare("EXIT") == 0)
 			return(0);
 		else
-		{
 			std::cout << "Im sorry Dave, I cant let you do that..."<< std::endl;
-			//system("say 'try again butter fingers'"); 
-		}
 	}
 }

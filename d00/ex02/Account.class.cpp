@@ -6,12 +6,13 @@
 /*   By: eramirez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 12:50:17 by eramirez          #+#    #+#             */
-/*   Updated: 2018/01/09 17:40:58 by eramirez         ###   ########.fr       */
+/*   Updated: 2018/01/09 21:44:42 by eramirez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <iostream>
 #include "Account.class.hpp"
 #include <ctime>
+
 int Account::getNbAccounts(void)
 {
 	return(Account::_nbAccounts);
@@ -39,7 +40,7 @@ void Account::displayAccountsInfos(void)
 				<< ";total:"		<< Account::_totalAmount 
 				<< ";deposits:"		<< Account::_totalNbDeposits
 				<< ";withdrawals:"	<< Account::_totalNbWithdrawals
-				<<std::endl;
+				<< std::endl;
 }
 
 Account::Account(int initial_deposit)
@@ -119,7 +120,11 @@ void    Account::displayStatus(void) const
 }
 void Account::_displayTimestamp( void )
 {
-	system("date +'[%Y%m%d_%H%M%S] ' | tr -d '\n'");
+	time_t t = time(NULL);
+	tm *my_time = localtime(&t);
+	char* b_time = new char[19];
+	strftime(b_time, 18, "[%Y%m%d_%H%M%S] ", my_time);
+	std::cout << b_time;
 }
 
 int	Account::_nbAccounts = 0;

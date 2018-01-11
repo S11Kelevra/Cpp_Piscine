@@ -16,14 +16,14 @@ std::string	Zombie::get_name(void)
 	std::string names[5] = {"Steve", "Stevey", "Stephen", "Steph", "Steve-o"};
 
 	int i = Zombie::randomish();
-	return(names[(rand() % i % 5)]);
+	return(names[rand() % i % 5]);
 }
 
 std::string	Zombie::get_type(void)
 {
 	std::string types[5] = {"Boomer", "Hunter", "Spitter", "Jockey", "Witch"};
 	int j = Zombie::randomish();
-	return(types[(rand() % j % 5)]);
+	return(types[((rand() - 1)% j % 5)]);
 }
 
 void Zombie::announce(void)

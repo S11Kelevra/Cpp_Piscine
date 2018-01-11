@@ -5,10 +5,10 @@
 class Human
 {
 	public:
-		const Brain *my_brain;
+		const Brain my_brain;
 		Human *addr;
 		std::string identify(void);
-		Brain getBrain(void);
+		const Brain &getBrain(void);
 		Human(void);
 		~Human(void);
 };

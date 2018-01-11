@@ -16,7 +16,7 @@ std::string	Zombie::get_name(void)
 	std::string names[5] = {"Steve", "Stevey", "Stephen", "Steph", "Steve-o"};
 
 	int i = Zombie::randomish();
-	return(names[(rand() % i % 5)]);
+	return(names[(i % 5)]);
 }
 
 std::string	Zombie::get_type(void)

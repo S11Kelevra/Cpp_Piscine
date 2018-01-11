@@ -2,8 +2,6 @@
 
 Human::Human(void)
 {
-	this->my_brain = new Brain;
-	this->my_brain->addr = &this->my_brain;
 }
 
 Human::~Human(void)
@@ -12,11 +10,10 @@ Human::~Human(void)
 
 std::string Human::identify(void)
 {
-	std::string addr  = "Human";
-	return(addr);
+	return(my_brain.identify());
 }
 
-Brain Human::getBrain(void)
+const Brain &Human::getBrain(void)
 {
-	return(*my_brain);
+	return(my_brain);
 }

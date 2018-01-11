@@ -1,13 +1,13 @@
 #ifndef BRAIN
  #define BRAIN
  #include <iostream>
+ #include <sstream>
 
 class Brain
 {
 	public:
 		int feelings;
-		Barin *addr;
-		std::string identify(void);
+		std::string identify(void) const;
 		Brain(void);
 		~Brain(void);
 };

@@ -9,7 +9,10 @@ Brain::~Brain(void)
 {
 }
 
-std::string Brain::identify(void)
+std::string Brain::identify(void) const
 {
-	return(*addr);
+	std::stringstream tmp;
+	const void *addr = this;
+	tmp << addr;
+	return(tmp.str());
 }
